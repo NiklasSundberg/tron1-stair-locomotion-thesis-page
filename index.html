@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reference-Guided Legged-Wheel Stair Locomotion</title>
+    <meta
+      name="description"
+      content="Supplementary videos and figures for reference-guided PPO stair climbing with a legged-wheel robot."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <p class="eyebrow">Master thesis supplementary material</p>
+        <h1>Reference-Guided Legged-Wheel Locomotion on Stairs</h1>
+        <p class="lead">
+          This page collects representative videos and figures from a simulated
+          stair-climbing study using Proximal Policy Optimization, body and wheel
+          reference trajectories, and curriculum learning in Isaac Lab.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#videos">Watch videos</a>
+          <a class="button" href="#figures">View figures</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="wrap two-column">
+          <div>
+            <h2>Project Summary</h2>
+            <p>
+              The thesis studies whether a policy can use predefined body and wheel
+              reference trajectories to learn stair traversal with a legged-wheel
+              robot. The policy receives proprioceptive observations and a compact
+              reference command. A critic uses simulator-only privileged information
+              during training.
+            </p>
+          </div>
+          <div>
+            <h2>Main Result</h2>
+            <p>
+              The best tested reward balance weighted three-reference tracking above
+              the base-task posture objective. With the default ELU-based PPO setup,
+              the learned policy completed all evaluated stair levels in simulation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shaded" id="videos">
+        <div class="wrap">
+          <h2>Representative Evaluation Videos</h2>
+          <p class="section-intro">
+            These clips show deterministic play evaluations from selected trained
+            policies. They are intended as visual context for the numerical results
+            in the thesis.
+          </p>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <video controls preload="metadata">
+                <source src="assets/videos/reward_task1p5_ref3p5.mp4" type="video/mp4">
+              </video>
+              <h3>Reward balance: task=1.5, 3-ref=3.5</h3>
+              <p>
+                Best curriculum progression in the reward-weight sensitivity study.
+              </p>
+            </article>
+
+            <article class="video-card">
+              <video controls preload="metadata">
+                <source src="assets/videos/reward_task2p0_ref3p0.mp4" type="video/mp4">
+              </video>
+              <h3>Reward balance: task=2.0, 3-ref=3.0</h3>
+              <p>
+                Baseline-style reward balance that also reached the highest evaluated
+                stair levels.
+              </p>
+            </article>
+
+            <article class="video-card">
+              <video controls preload="metadata">
+                <source src="assets/videos/reward_task2p5_ref2p5.mp4" type="video/mp4">
+              </video>
+              <h3>Reward balance: task=2.5, 3-ref=2.5</h3>
+              <p>
+                Intermediate-performing reward balance included for comparison.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="figures">
+        <div class="wrap">
+          <h2>Key Figures</h2>
+          <div class="figure-grid">
+            <figure>
+              <img
+                src="assets/figures/three_ref_stair_trajectory_combined.svg"
+                alt="Three-reference stair trajectory visualization."
+              >
+              <figcaption>Three-reference body and wheel trajectory bank.</figcaption>
+            </figure>
+
+            <figure>
+              <img
+                src="assets/figures/curriculum_progress_reward_sweep.svg"
+                alt="Curriculum progress for reward-weight sensitivity study."
+              >
+              <figcaption>Training progression for reward-weight variants.</figcaption>
+            </figure>
+
+            <figure>
+              <img
+                src="assets/figures/curriculum_progress_ppo_sweep.svg"
+                alt="Curriculum progress for PPO hyperparameter sensitivity study."
+              >
+              <figcaption>Training progression for PPO hyperparameter variants.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="wrap">
+          <h2>Scope</h2>
+          <p>
+            The videos and figures are supplementary material for the thesis. They do
+            not replace the quantitative evaluation tables, but they make the learned
+            locomotion behavior easier to inspect.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Supplementary material for a simulated legged-wheel stair-climbing thesis.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
