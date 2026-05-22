@@ -4,14 +4,6 @@ Supplementary material for a master thesis on reference-guided Proximal Policy O
 
 The project studies whether a policy can use predefined body and wheel reference trajectories to learn stable stair traversal in Isaac Lab. The page focuses on rendered evaluation videos and key figures. The thesis PDF is intentionally not included here.
 
-## Project Page
-
-A small rendered project page is available through GitHub Pages after publishing:
-
-```text
-https://niklassundberg.github.io/tron1-stair-locomotion-thesis-page/
-```
-
 ## Representative Evaluation Videos
 
 The videos below show deterministic play evaluations from selected trained policies.
