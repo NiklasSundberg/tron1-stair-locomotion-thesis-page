@@ -123,14 +123,13 @@ h3 {
   padding-top: 36px;
 }
 
-.two-column {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 40px;
-}
-
 p {
   margin: 0;
+}
+
+.project-intro {
+  max-width: 760px;
+  font-size: 1.06rem;
 }
 
 .section-intro {
@@ -139,7 +138,12 @@ p {
   margin-bottom: 24px;
 }
 
-.video-grid,
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
 .figure-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -168,6 +172,13 @@ figure {
   margin-top: 8px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.video-link {
+  display: inline-block;
+  margin: 14px 16px 0;
+  color: var(--accent-dark);
+  font-weight: 650;
 }
 
 video,
@@ -201,7 +212,6 @@ figcaption {
 }
 
 @media (max-width: 880px) {
-  .two-column,
   .video-grid,
   .figure-grid {
     grid-template-columns: 1fr;

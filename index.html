@@ -16,9 +16,9 @@
         <p class="eyebrow">Master thesis supplementary material</p>
         <h1>Reference-Guided Legged-Wheel Locomotion on Stairs</h1>
         <p class="lead">
-          This page collects representative videos and figures from a simulated
-          stair-climbing study using Proximal Policy Optimization, body and wheel
-          reference trajectories, and curriculum learning in Isaac Lab.
+          Supplementary material for a master thesis on reference-guided
+          Proximal Policy Optimization (PPO) for simulated stair climbing with a
+          legged-wheel robot.
         </p>
         <div class="actions">
           <a class="button primary" href="#videos">Watch videos</a>
@@ -29,25 +29,13 @@
 
     <main>
       <section class="section">
-        <div class="wrap two-column">
-          <div>
-            <h2>Project Summary</h2>
-            <p>
-              The thesis studies whether a policy can use predefined body and wheel
-              reference trajectories to learn stair traversal with a legged-wheel
-              robot. The policy receives proprioceptive observations and a compact
-              reference command. A critic uses simulator-only privileged information
-              during training.
-            </p>
-          </div>
-          <div>
-            <h2>Main Result</h2>
-            <p>
-              The best tested reward balance weighted three-reference tracking above
-              the base-task posture objective. With the default ELU-based PPO setup,
-              the learned policy completed all evaluated stair levels in simulation.
-            </p>
-          </div>
+        <div class="wrap">
+          <p class="project-intro">
+            The project studies whether a policy can use predefined body and
+            wheel reference trajectories to learn stable stair traversal in
+            Isaac Lab. The page focuses on rendered evaluation videos and key
+            figures. The thesis PDF is intentionally not included here.
+          </p>
         </div>
       </section>
 
@@ -55,41 +43,37 @@
         <div class="wrap">
           <h2>Representative Evaluation Videos</h2>
           <p class="section-intro">
-            These clips show deterministic play evaluations from selected trained
-            policies. They are intended as visual context for the numerical results
-            in the thesis.
+            The videos below show deterministic play evaluations from selected
+            trained policies.
           </p>
 
           <div class="video-grid">
             <article class="video-card">
               <video controls preload="metadata">
-                <source src="assets/videos/reward_task1p5_ref3p5.mp4" type="video/mp4">
+                <source src="assets/videos/stair_difficulty_sweep_best.mp4" type="video/mp4">
               </video>
               <h3>Reward balance: task=1.5, 3-ref=3.5</h3>
               <p>
                 Best curriculum progression in the reward-weight sensitivity study.
               </p>
+              <a class="video-link" href="assets/videos/stair_difficulty_sweep_best.mp4">
+                Open video file
+              </a>
             </article>
 
             <article class="video-card">
               <video controls preload="metadata">
-                <source src="assets/videos/reward_task2p0_ref3p0.mp4" type="video/mp4">
+                <source src="assets/videos/stair_difficulty_sweep_tanh.mp4" type="video/mp4">
               </video>
-              <h3>Reward balance: task=2.0, 3-ref=3.0</h3>
+              <h3>tanh activation layer example</h3>
               <p>
-                Baseline-style reward balance that also reached the highest evaluated
-                stair levels.
+                Variant that stalled at the 5th difficulty level. It could not
+                learn behaviour enabeling it to climb step heights taller than
+                the wheel radius.
               </p>
-            </article>
-
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/reward_task2p5_ref2p5.mp4" type="video/mp4">
-              </video>
-              <h3>Reward balance: task=2.5, 3-ref=2.5</h3>
-              <p>
-                Intermediate-performing reward balance included for comparison.
-              </p>
+              <a class="video-link" href="assets/videos/stair_difficulty_sweep_tanh.mp4">
+                Open video file
+              </a>
             </article>
           </div>
         </div>
@@ -130,9 +114,9 @@
         <div class="wrap">
           <h2>Scope</h2>
           <p>
-            The videos and figures are supplementary material for the thesis. They do
-            not replace the quantitative evaluation tables, but they make the learned
-            locomotion behavior easier to inspect.
+            This repository is a supplementary project page. It is intended to
+            make the qualitative locomotion behavior easier to inspect alongside
+            the numerical evaluation reported in the thesis.
           </p>
         </div>
       </section>
