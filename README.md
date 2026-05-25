@@ -12,25 +12,18 @@ The videos below show deterministic play evaluations from selected trained polic
 
 Best curriculum progression in the reward-weight sensitivity study.
 
-<video src="assets/videos/reward_task1p5_ref3p5.mp4" controls width="720"></video>
+<video src="assets/videos/stair_difficulty_sweep_best.mp4" controls width="720"></video>
 
-[Open video file](assets/videos/reward_task1p5_ref3p5.mp4)
+[Open video file](assets/videos/stair_difficulty_sweep_best.mp4)
 
-### Reward balance: task=2.0, 3-ref=3.0
+### tanh activation layer example
 
-Baseline-style reward balance that also reached the highest evaluated stair levels.
+Variant that stalled at the 5th difficulty level. It could not learn behaviour enabeling it to climb step heights taller than the wheel radius.
 
-<video src="assets/videos/reward_task2p0_ref3p0.mp4" controls width="720"></video>
+<video src="assets/videos/stair_difficulty_sweep_tanh.mp4" controls width="720"></video>
 
-[Open video file](assets/videos/reward_task2p0_ref3p0.mp4)
+[Open video file](assets/videos/stair_difficulty_sweep_tanh.mp4)
 
-### Reward balance: task=2.5, 3-ref=2.5
-
-Intermediate-performing reward balance included for comparison.
-
-<video src="assets/videos/reward_task2p5_ref2p5.mp4" controls width="720"></video>
-
-[Open video file](assets/videos/reward_task2p5_ref2p5.mp4)
 
 ## Key Figures
 
