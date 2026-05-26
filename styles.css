@@ -138,6 +138,27 @@ p {
   margin-bottom: 24px;
 }
 
+.additional-videos {
+  margin-top: 54px;
+  padding-top: 46px;
+  border-top: 1px solid var(--line);
+}
+
+.video-group + .video-group {
+  margin-top: 42px;
+}
+
+.video-group-title {
+  margin-bottom: 18px;
+  font-size: 1.35rem;
+}
+
+.video-group-intro {
+  max-width: 760px;
+  margin: -8px 0 18px;
+  color: var(--muted);
+}
+
 .video-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
