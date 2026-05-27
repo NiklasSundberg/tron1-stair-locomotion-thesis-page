@@ -138,6 +138,47 @@ p {
   margin-bottom: 24px;
 }
 
+.settings-intro {
+  margin-bottom: 28px;
+}
+
+.table-wrap {
+  max-width: 720px;
+  overflow-x: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.96rem;
+}
+
+caption {
+  padding: 16px;
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+th,
+td {
+  padding: 9px 16px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+
+th {
+  background: var(--soft);
+  font-weight: 650;
+}
+
+td:last-child {
+  white-space: nowrap;
+}
+
 .additional-videos {
   margin-top: 54px;
   padding-top: 46px;

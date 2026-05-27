@@ -6,6 +6,28 @@ Supplementary material for a master thesis on reference-guided Proximal Policy O
 
 The project studies whether a policy can use predefined body and wheel reference trajectories to learn stable stair traversal in Isaac Lab. The page focuses on rendered evaluation videos and key figures. The thesis PDF is intentionally not included here.
 
+## PPO Training Settings
+
+The PPO settings below were used for pretraining and stair fine-tuning. They were held fixed in the reward-weight sensitivity study, where only `w_task` and `w_3ref` were varied. After selecting `(w_task, w_3ref) = (1.5, 3.5)`, these settings define the PPO baseline from which the hyperparameter variants change one selected PPO setting.
+
+**Table 1. PPO training hyperparameters used for pretraining and stair fine-tuning.**
+
+| Parameter | Value |
+| --- | --- |
+| Rollout length | 24 steps |
+| Learning epochs | 5 |
+| Mini-batches per epoch | 4 |
+| Discount factor (`gamma`) | 0.99 |
+| GAE parameter (`lambda`) | 0.95 |
+| PPO clip parameter | 0.2 |
+| Value loss coefficient | 1.0 |
+| Entropy coefficient | 0.01 |
+| Gradient norm clipping | 1.0 |
+| Initial action standard deviation | 1.0 |
+| Learning rate | `1 x 10^-3`, adaptive |
+| Adaptive KL target | 0.01 |
+| Actor/critic activation | ELU |
+
 ## Representative Evaluation Videos
 
 The videos below show deterministic play evaluations from selected trained policies.

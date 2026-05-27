@@ -23,6 +23,7 @@
         <div class="actions">
           <a class="button primary" href="#videos">Watch videos</a>
           <a class="button" href="#figures">View figures</a>
+          <a class="button" href="#settings">PPO settings</a>
         </div>
       </div>
     </header>
@@ -36,6 +37,50 @@
             Isaac Lab. The page focuses on rendered evaluation videos and key
             figures. The thesis PDF is intentionally not included here.
           </p>
+        </div>
+      </section>
+
+      <section class="section" id="settings">
+        <div class="wrap">
+          <h2>PPO Training Settings</h2>
+          <p class="section-intro settings-intro">
+            The PPO settings below were used for pretraining and stair
+            fine-tuning. They were held fixed in the reward-weight sensitivity
+            study, where only <i>w</i><sub>task</sub> and
+            <i>w</i><sub>3ref</sub> were varied. After selecting
+            (<i>w</i><sub>task</sub>, <i>w</i><sub>3ref</sub>) = (1.5, 3.5),
+            these settings define the PPO baseline from which the
+            hyperparameter variants change one selected PPO setting.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <caption>
+                Table 1. PPO training hyperparameters used for pretraining and
+                stair fine-tuning.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Parameter</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Rollout length</td><td>24 steps</td></tr>
+                <tr><td>Learning epochs</td><td>5</td></tr>
+                <tr><td>Mini-batches per epoch</td><td>4</td></tr>
+                <tr><td>Discount factor &gamma;</td><td>0.99</td></tr>
+                <tr><td>GAE parameter &lambda;</td><td>0.95</td></tr>
+                <tr><td>PPO clip parameter</td><td>0.2</td></tr>
+                <tr><td>Value loss coefficient</td><td>1.0</td></tr>
+                <tr><td>Entropy coefficient</td><td>0.01</td></tr>
+                <tr><td>Gradient norm clipping</td><td>1.0</td></tr>
+                <tr><td>Initial action standard deviation</td><td>1.0</td></tr>
+                <tr><td>Learning rate</td><td>1 &times; 10<sup>-3</sup>, adaptive</td></tr>
+                <tr><td>Adaptive KL target</td><td>0.01</td></tr>
+                <tr><td>Actor/critic activation</td><td>ELU</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
