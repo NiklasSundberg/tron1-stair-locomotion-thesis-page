@@ -232,6 +232,10 @@ figcaption {
   font-size: 0.92rem;
 }
 
+.site-footer p + p {
+  margin-top: 8px;
+}
+
 @media (max-width: 880px) {
   .video-grid,
   .figure-grid {

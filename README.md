@@ -2,6 +2,8 @@
 
 Supplementary material for a master thesis on reference-guided Proximal Policy Optimization (PPO) for simulated stair climbing with a legged-wheel robot.
 
+[View the project webpage](https://niklassundberg.github.io/tron1-stair-locomotion-thesis-page/)
+
 The project studies whether a policy can use predefined body and wheel reference trajectories to learn stable stair traversal in Isaac Lab. The page focuses on rendered evaluation videos and key figures. The thesis PDF is intentionally not included here.
 
 ## Representative Evaluation Videos
@@ -105,3 +107,9 @@ These variants use the `task=1.5, 3-ref=3.5` reward balance shown above as the c
 ## Scope
 
 This repository is a supplementary project page. It is intended to make the qualitative locomotion behavior easier to inspect alongside the numerical evaluation reported in the thesis.
+
+## Availability and Rights
+
+Due to hardware and framework dependencies, the full training and deployment code is not publicly released.
+
+All rights to the thesis manuscript, figures, and videos are reserved by the author.
