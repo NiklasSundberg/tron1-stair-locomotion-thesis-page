@@ -28,6 +28,38 @@ The PPO settings below were used for pretraining and stair fine-tuning. They wer
 | Adaptive KL target | 0.01 |
 | Actor/critic activation | ELU |
 
+## Reward Design
+
+The final stair task uses a split exponential reward. PPO maximizes this scalar feedback signal, so the reward acts like a task-specific objective rather than a direct measure of stair-climbing ability. The design separates a base locomotion objective from the three-reference tracking objective:
+
+```text
+R_t = w_alive
+    + w_task exp(-E_task)
+    + w_3ref exp(-E_3ref)
+    - w_lag E_lag
+    - w_reg E_reg
+    - w_contact C_undesired
+    - w_term 1_terminated
+    - w_still E_still
+```
+
+The exponential terms produce bounded rewards in `(0, 1]` before their outer weights are applied. This keeps smaller tracking errors valuable without giving the reward the unbounded negative scale of a pure quadratic objective. Because the terms are manually specified, the learned policy should be interpreted as optimized for this surrogate objective: a measurable proxy that encodes the task designer's assumptions about useful posture, tracking, regularization, and contact behavior.
+
+`E_task` preserves stabilizing velocity-locomotion terms. It penalizes deviations from nominal body height, body tilt, wheel placement, and leg symmetry, acting as a posture and stability prior rather than a direct description of the stair geometry.
+
+`E_3ref` measures task-space tracking of the body and wheel references:
+
+```text
+E_3ref =
+    w_b,x e_b,x^2 + w_b,y e_b,y^2 + w_b,z e_b,z^2
+    + w_b,r E_b,rot
+    + w_w,x (e_L,x^2 + e_R,x^2)
+    + w_w,y (e_L,y^2 + e_R,y^2)
+    + w_w,z (e_L,z^2 + e_R,z^2)
+```
+
+The body and wheel errors are normalized differences between simulated positions and the reference positions from the command vector. The body rotation term penalizes roll, pitch, and yaw deviation from the nominal body orientation; in the stair experiments the desired yaw is zero because the motion is straight forward.
+
 ## Representative Evaluation Videos
 
 The videos below show deterministic play evaluations from selected trained policies.

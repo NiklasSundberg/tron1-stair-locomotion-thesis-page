@@ -179,10 +179,31 @@ td:last-child {
   white-space: nowrap;
 }
 
-.additional-videos {
-  margin-top: 54px;
-  padding-top: 46px;
-  border-top: 1px solid var(--line);
+.equation-card {
+  max-width: 980px;
+  margin-top: 20px;
+  padding: 18px;
+  overflow-x: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.equation {
+  min-width: 680px;
+  color: var(--accent-dark);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.text-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 980px;
+  margin-top: 22px;
+  color: var(--muted);
 }
 
 .video-group + .video-group {
@@ -279,7 +300,8 @@ figcaption {
 
 @media (max-width: 880px) {
   .video-grid,
-  .figure-grid {
+  .figure-grid,
+  .text-columns {
     grid-template-columns: 1fr;
   }
 

@@ -22,8 +22,9 @@
         </p>
         <div class="actions">
           <a class="button primary" href="#videos">Watch videos</a>
-          <a class="button" href="#figures">View figures</a>
           <a class="button" href="#settings">PPO settings</a>
+          <a class="button" href="#reward">Reward design</a>
+          <a class="button" href="#figures">View figures</a>
         </div>
       </div>
     </header>
@@ -37,6 +38,46 @@
             Isaac Lab. The page focuses on rendered evaluation videos and key
             figures. The thesis PDF is intentionally not included here.
           </p>
+        </div>
+      </section>
+
+      <section class="section shaded" id="videos">
+        <div class="wrap">
+          <h2>Representative Evaluation Videos</h2>
+          <p class="section-intro">
+            The videos below show deterministic play evaluations from selected
+            trained policies.
+          </p>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <video controls preload="metadata">
+                <source src="assets/videos/stair_difficulty_sweep_w_task1p5_ref3p5.mp4" type="video/mp4">
+              </video>
+              <h3>Reward balance: task=1.5, 3-ref=3.5</h3>
+              <p>
+                Best curriculum progression in the reward-weight sensitivity study.
+              </p>
+              <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task1p5_ref3p5.mp4">
+                Open video file
+              </a>
+            </article>
+
+            <article class="video-card">
+              <video controls preload="metadata">
+                <source src="assets/videos/stair_difficulty_sweep_ppo_activation_tanh_task1p5_ref3p5.mp4" type="video/mp4">
+              </video>
+              <h3>tanh activation layer example</h3>
+              <p>
+                Variant that stalled at the 5th difficulty level. It could not
+                learn behavior enabling it to climb step heights taller than
+                the wheel radius.
+              </p>
+              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_activation_tanh_task1p5_ref3p5.mp4">
+                Open video file
+              </a>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -84,162 +125,182 @@
         </div>
       </section>
 
-      <section class="section shaded" id="videos">
+      <section class="section" id="reward">
         <div class="wrap">
-          <h2>Representative Evaluation Videos</h2>
+          <h2>Reward Design</h2>
           <p class="section-intro">
-            The videos below show deterministic play evaluations from selected
-            trained policies.
+            The final stair task uses a split exponential reward. PPO maximizes
+            this scalar feedback signal, so the reward acts as a task-specific
+            objective rather than a direct measure of stair-climbing ability.
+            The design separates a base locomotion objective from the
+            three-reference tracking objective.
+          </p>
+          <div class="equation-card">
+            <p class="equation">
+              R<sub>t</sub> = w<sub>alive</sub> +
+              w<sub>task</sub> exp(-E<sub>task</sub>) +
+              w<sub>3ref</sub> exp(-E<sub>3ref</sub>) -
+              w<sub>lag</sub>E<sub>lag</sub> -
+              w<sub>reg</sub>E<sub>reg</sub> -
+              w<sub>contact</sub>C<sub>undesired</sub> -
+              w<sub>term</sub>1<sub>terminated</sub> -
+              w<sub>still</sub>E<sub>still</sub>
+            </p>
+          </div>
+          <div class="text-columns">
+            <p>
+              The exponential terms produce bounded rewards in (0, 1] before
+              their outer weights are applied. This avoids the unbounded
+              negative scale of a pure quadratic objective while still making
+              smaller tracking errors more valuable. Since the terms are
+              manually specified, the learned policy is best interpreted as
+              optimized for this surrogate objective: a measurable proxy for
+              the task designer's assumptions about posture, tracking,
+              regularization, and contact behavior.
+            </p>
+            <p>
+              E<sub>task</sub> preserves stabilizing velocity-locomotion terms
+              for nominal body height, body tilt, wheel placement, and leg
+              symmetry. E<sub>3ref</sub> measures task-space tracking of body
+              and wheel references from the command vector. The body rotation
+              term penalizes roll, pitch, and yaw deviation from the nominal
+              orientation; in the stair experiments the desired yaw is zero
+              because the motion is straight forward.
+            </p>
+          </div>
+          <div class="equation-card">
+            <p class="equation">
+              E<sub>3ref</sub> =
+              w<sub>b,x</sub>e<sub>b,x</sub><sup>2</sup> +
+              w<sub>b,y</sub>e<sub>b,y</sub><sup>2</sup> +
+              w<sub>b,z</sub>e<sub>b,z</sub><sup>2</sup> +
+              w<sub>b,r</sub>E<sub>b,rot</sub> +
+              w<sub>w,x</sub>(e<sub>L,x</sub><sup>2</sup> + e<sub>R,x</sub><sup>2</sup>) +
+              w<sub>w,y</sub>(e<sub>L,y</sub><sup>2</sup> + e<sub>R,y</sub><sup>2</sup>) +
+              w<sub>w,z</sub>(e<sub>L,z</sub><sup>2</sup> + e<sub>R,z</sub><sup>2</sup>)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shaded" id="additional-videos">
+        <div class="wrap">
+          <h2>Additional Evaluation Videos</h2>
+          <p class="section-intro">
+            Further deterministic play evaluations from the reward-weight
+            and PPO hyperparameter studies.
           </p>
 
-          <div class="video-grid">
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_w_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>Reward balance: task=1.5, 3-ref=3.5</h3>
-              <p>
-                Best curriculum progression in the reward-weight sensitivity study.
-              </p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
+          <div class="video-group">
+            <h3 class="video-group-title">Reward-weight variants</h3>
+            <div class="video-grid">
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_w_task1p0_ref4p0.mp4" type="video/mp4">
+                </video>
+                <h3>task=1.0, 3-ref=4.0</h3>
+                <p>Reward-weight sensitivity variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task1p0_ref4p0.mp4">
+                  Open video file
+                </a>
+              </article>
 
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_ppo_activation_tanh_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>tanh activation layer example</h3>
-              <p>
-                Variant that stalled at the 5th difficulty level. It could not
-                learn behavior enabling it to climb step heights taller than
-                the wheel radius.
-              </p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_activation_tanh_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_w_task2p0_ref3p0.mp4" type="video/mp4">
+                </video>
+                <h3>task=2.0, 3-ref=3.0</h3>
+                <p>Reward-weight sensitivity variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task2p0_ref3p0.mp4">
+                  Open video file
+                </a>
+              </article>
+
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_w_task2p5_ref2p5.mp4" type="video/mp4">
+                </video>
+                <h3>task=2.5, 3-ref=2.5</h3>
+                <p>Reward-weight sensitivity variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task2p5_ref2p5.mp4">
+                  Open video file
+                </a>
+              </article>
+
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_w_task3p0_ref2p0.mp4" type="video/mp4">
+                </video>
+                <h3>task=3.0, 3-ref=2.0</h3>
+                <p>Reward-weight sensitivity variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task3p0_ref2p0.mp4">
+                  Open video file
+                </a>
+              </article>
+            </div>
           </div>
 
-          <div class="additional-videos">
-            <h2>Additional Evaluation Videos</h2>
-            <p class="section-intro">
-              Further deterministic play evaluations from the reward-weight
-              and PPO hyperparameter studies.
+          <div class="video-group">
+            <h3 class="video-group-title">PPO hyperparameter variants</h3>
+            <p class="video-group-intro">
+              These variants use the task=1.5, 3-ref=3.5 reward balance above
+              as the comparison baseline. The highlighted tanh variant appears above.
             </p>
+            <div class="video-grid">
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_ppo_activation_relu_task1p5_ref3p5.mp4" type="video/mp4">
+                </video>
+                <h3>ReLU activation</h3>
+                <p>PPO hyperparameter variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_activation_relu_task1p5_ref3p5.mp4">
+                  Open video file
+                </a>
+              </article>
 
-            <div class="video-group">
-              <h3 class="video-group-title">Reward-weight variants</h3>
-              <div class="video-grid">
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_w_task1p0_ref4p0.mp4" type="video/mp4">
-              </video>
-              <h3>task=1.0, 3-ref=4.0</h3>
-              <p>Reward-weight sensitivity variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task1p0_ref4p0.mp4">
-                Open video file
-              </a>
-            </article>
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_ppo_lower_entropy_ent5e3_task1p5_ref3p5.mp4" type="video/mp4">
+                </video>
+                <h3>Entropy coefficient: 0.005</h3>
+                <p>PPO hyperparameter variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_lower_entropy_ent5e3_task1p5_ref3p5.mp4">
+                  Open video file
+                </a>
+              </article>
 
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_w_task2p0_ref3p0.mp4" type="video/mp4">
-              </video>
-              <h3>task=2.0, 3-ref=3.0</h3>
-              <p>Reward-weight sensitivity variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task2p0_ref3p0.mp4">
-                Open video file
-              </a>
-            </article>
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_ppo_lower_kl5e3_task1p5_ref3p5.mp4" type="video/mp4">
+                </video>
+                <h3>Target KL: 0.005</h3>
+                <p>PPO hyperparameter variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_lower_kl5e3_task1p5_ref3p5.mp4">
+                  Open video file
+                </a>
+              </article>
 
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_w_task2p5_ref2p5.mp4" type="video/mp4">
-              </video>
-              <h3>task=2.5, 3-ref=2.5</h3>
-              <p>Reward-weight sensitivity variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task2p5_ref2p5.mp4">
-                Open video file
-              </a>
-            </article>
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_ppo_higher_kl2e2_task1p5_ref3p5.mp4" type="video/mp4">
+                </video>
+                <h3>Target KL: 0.02</h3>
+                <p>PPO hyperparameter variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_higher_kl2e2_task1p5_ref3p5.mp4">
+                  Open video file
+                </a>
+              </article>
 
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_w_task3p0_ref2p0.mp4" type="video/mp4">
-              </video>
-              <h3>task=3.0, 3-ref=2.0</h3>
-              <p>Reward-weight sensitivity variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_w_task3p0_ref2p0.mp4">
-                Open video file
-              </a>
-            </article>
-              </div>
-            </div>
-
-            <div class="video-group">
-              <h3 class="video-group-title">PPO hyperparameter variants</h3>
-              <p class="video-group-intro">
-                These variants use the task=1.5, 3-ref=3.5 reward balance above
-                as the comparison baseline. The highlighted tanh variant appears above.
-              </p>
-              <div class="video-grid">
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_ppo_activation_relu_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>ReLU activation</h3>
-              <p>PPO hyperparameter variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_activation_relu_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
-
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_ppo_lower_entropy_ent5e3_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>Entropy coefficient: 0.005</h3>
-              <p>PPO hyperparameter variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_lower_entropy_ent5e3_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
-
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_ppo_lower_kl5e3_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>Target KL: 0.005</h3>
-              <p>PPO hyperparameter variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_lower_kl5e3_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
-
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_ppo_higher_kl2e2_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>Target KL: 0.02</h3>
-              <p>PPO hyperparameter variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_higher_kl2e2_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
-
-            <article class="video-card">
-              <video controls preload="metadata">
-                <source src="assets/videos/stair_difficulty_sweep_ppo_lower_noise_std0p7_task1p5_ref3p5.mp4" type="video/mp4">
-              </video>
-              <h3>Noise standard deviation: 0.7</h3>
-              <p>PPO hyperparameter variant.</p>
-              <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_lower_noise_std0p7_task1p5_ref3p5.mp4">
-                Open video file
-              </a>
-            </article>
-              </div>
+              <article class="video-card">
+                <video controls preload="metadata">
+                  <source src="assets/videos/stair_difficulty_sweep_ppo_lower_noise_std0p7_task1p5_ref3p5.mp4" type="video/mp4">
+                </video>
+                <h3>Noise standard deviation: 0.7</h3>
+                <p>PPO hyperparameter variant.</p>
+                <a class="video-link" href="assets/videos/stair_difficulty_sweep_ppo_lower_noise_std0p7_task1p5_ref3p5.mp4">
+                  Open video file
+                </a>
+              </article>
             </div>
           </div>
         </div>
