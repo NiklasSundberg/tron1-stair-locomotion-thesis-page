@@ -80,6 +80,14 @@ Variant that stalled at the 5th difficulty level. It could not learn behavior en
 
 [Open video file](assets/videos/stair_difficulty_sweep_ppo_activation_tanh_task1p5_ref3p5.mp4)
 
+### Curriculum rehearsal example
+
+Slow labeled replay showing a transition from curriculum level 4 back to level 0. This illustrates why rehearsal of earlier levels is needed during curriculum learning: without revisiting easier cases, the policy can overfit to the current difficulty and lose robustness on terrain it previously solved.
+
+<video src="assets/videos/level_4_then_level_0_slow_labeled.mp4" controls width="720"></video>
+
+[Open video file](assets/videos/level_4_then_level_0_slow_labeled.mp4)
+
 ## Additional Evaluation Videos
 
 Further deterministic play evaluations from the reward-weight and PPO hyperparameter studies.
